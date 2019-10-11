@@ -14,7 +14,7 @@ private:
 public:
     explicit TextNode(Slides* parent) : Node(parent, Type::Text) {}
 
-    void render(int width, int height) const override;
+    void render(int width, int height) override;
 
     inline const std::string& text() const { return _text; }
     inline const Style::Font* font() const { return _font; }

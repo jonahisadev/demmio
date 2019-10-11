@@ -24,9 +24,8 @@ Slide::Slide(Slides* parent, const JObject *slide)
             // Relative text positioning
             if (jnode->string("relative") != nullptr) {
                 std::string relative = jnode->string("relative")->value();
-                if (relative == "center") {
+                if (relative == "center")
                     node->setRelative(Node::RelativeToCenter);
-                }
             }
             
             float width = node->font()->font_face->width(node->text());
@@ -43,6 +42,13 @@ Slide::Slide(Slides* parent, const JObject *slide)
             node->setSize(Util::read2f(jnode->array("size")));
             std::string path = parent->_res + jnode->string("name")->value();
             node->setImage(path);
+
+            // TODO: modularize this
+            if (jnode->string("relative") != nullptr) {
+                std::string relative = jnode->string("relative")->value();
+                if (relative == "center")
+                    node->setRelative(Node::RelativeToCenter);
+            }
             
             _nodes.push_back(node);
         }

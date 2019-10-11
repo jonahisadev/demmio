@@ -1,6 +1,11 @@
 #include "ImageNode.h"
 
-void ImageNode::render(int width, int height) const {
+void ImageNode::render(int width, int height) {
+    if (_relative == Node::RelativeToCenter) {
+        JEngine::Vector2f center = {float(width / 2), float(height / 2)};
+        _image->setCenter(center);
+        _image->translate(_pos.x(), _pos.y());
+    }
     _image->render();
 }
 

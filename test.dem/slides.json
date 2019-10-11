@@ -22,7 +22,8 @@
         }, {
             "type": "image",
             "name": "coyote.png",
-            "pos": [50, 50],
+            "pos": [0, 0],
+            "relative": "center",
             "size": [400, 400]
         }]
     }]

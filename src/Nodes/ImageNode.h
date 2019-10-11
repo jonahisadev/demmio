@@ -12,7 +12,7 @@ private:
 public:
     ImageNode(Slides* parent) : Node(parent, Type::Image) {}
 
-    void render(int width, int height) const override;
+    void render(int width, int height) override;
 
     inline const JEngine::TexturedQuad& image() const { return *_image.get(); }
     void setImage(std::string path);
