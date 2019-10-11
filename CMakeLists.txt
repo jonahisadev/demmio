@@ -15,3 +15,18 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_include_directories(demmio PUBLIC ${GLFW_INCLUDE_DIRS} /usr/local/include/freetype2)
     target_compile_options(demmio PUBLIC ${GLFW_CFLAGS_OTHER})
 endif()
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    find_library(GL OpenGL)
+    find_library(CC Cocoa)
+    find_library(IO IOKit)
+    find_library(CV CoreVideo)
+
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GLFW REQUIRED glfw3)
+
+    target_link_directories(demmio PUBLIC /usr/local/lib)
+    target_include_directories(demmio PUBLIC ${GLFW_INCLUDE_DIRS} /usr/local/include/freetype2)
+    target_link_libraries(demmio ${GL} ${GLFW_LIBRARIES} SOIL openal freetype jengine jjson ${CC} ${IO} ${CV})
+    target_compile_options(demmio PUBLIC ${GLFW_CFLAGS_OTHER})
+endif()
