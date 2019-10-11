@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.10)
 project(demmio)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -15,3 +15,5 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_include_directories(demmio PUBLIC ${GLFW_INCLUDE_DIRS} /usr/local/include/freetype2)
     target_compile_options(demmio PUBLIC ${GLFW_CFLAGS_OTHER})
 endif()
+
+install(TARGETS demmio RUNTIME DESTINATION /usr/bin)

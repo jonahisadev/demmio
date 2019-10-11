@@ -24,9 +24,10 @@ public:
 private:
     JEngine::Vector3i _background;
     std::map<std::string, Font*> _fonts;
+    std::string _res;
     
 public:
-    explicit Style(const char* path);
+    explicit Style(const std::string& path);
     ~Style();
     
     const JEngine::Vector3i& background();

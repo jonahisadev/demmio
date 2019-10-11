@@ -19,6 +19,11 @@
             "text": "Slide 2!",
             "pos": [10, 10],
             "font": "Roboto-Regular-48"
+        }, {
+            "type": "image",
+            "name": "coyote.png",
+            "pos": [50, 50],
+            "size": [400, 400]
         }]
     }]
 }
