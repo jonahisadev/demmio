@@ -9,7 +9,12 @@
 #include "Style.h"
 #include "Slide.h"
 
-int main() {
+int main(int argc, char** argv) {
+    if (argc < 2) {
+        std::cerr << "Usage: demmio [file.dem]" << std::endl;
+        return 1;
+    }
+    
     // Init
     using namespace JEngine;
     Game::flags() << Game::EnableFonts;
@@ -22,11 +27,12 @@ int main() {
     
     auto t1 = std::chrono::high_resolution_clock::now();
 
-    // Style
-    Style style("../test.dem/style.json");
+    // Path
+    auto path = std::string(argv[1]);
     
-    // Slides
-    Slides slides(&style);
+    // Slides and style
+    Style style(path);
+    Slides slides(path, &style);
 
     auto t2 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> time_span = t2 - t1;
@@ -46,6 +52,16 @@ int main() {
         }
         if (window.keyOnce(KeyLeft)) {
             slides.back();
+        }
+        
+        // Leave fullscreen
+        if (window.keyOnce(KeyEscape)) {
+            window.fullscreen(false);
+        }
+        
+        // Enter fullscreen
+        if (window.keyOnce(KeyF11)) {
+            window.fullscreen(true);
         }
         
         // Quit

@@ -4,6 +4,8 @@
 #include <memory>
 
 #include <jjson/json.h>
+#include <JEngine/JEngine.h>
+#include <JEngine/Graphics/TexturedQuad.h>
 
 #include "Style.h"
 
@@ -24,8 +26,15 @@ public:
         RelativePosition relative = RelativeToNone;
     };
     
+    struct ImageNode {
+        JEngine::TexturedQuadPtr img;
+        JEngine::Vector2f pos;
+        JEngine::Vector2f size;
+    };
+    
     Slides* _parent;
     std::vector<TextNode> _text_nodes;
+    std::vector<ImageNode> _img_nodes;
     
 private:
     Slide(Slides* parent, const JObject* slide);
@@ -41,10 +50,11 @@ private:
     int _current;
     int _max;
     Style* _style;
+    std::string _res;
     friend class Slide;
     
 public:
-    Slides(Style* style);
+    Slides(const std::string& path, Style* style);
     
     void next();
     void back();

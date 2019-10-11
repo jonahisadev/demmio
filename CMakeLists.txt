@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.10)
 project(demmio)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -30,3 +30,5 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     target_link_libraries(demmio ${GL} ${GLFW_LIBRARIES} SOIL openal freetype jengine jjson ${CC} ${IO} ${CV})
     target_compile_options(demmio PUBLIC ${GLFW_CFLAGS_OTHER})
 endif()
+
+install(TARGETS demmio RUNTIME DESTINATION /usr/bin)

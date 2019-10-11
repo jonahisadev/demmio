@@ -1,7 +1,9 @@
 #include "Style.h"
 
-Style::Style(const char *path) {
-    JObject* style = JSONDocument::parseFromFile(path);
+Style::Style(const std::string& path) {
+    _res = path + "/res/";
+    
+    JObject* style = JSONDocument::parseFromFile(path + "/style.json");
     
     // Background color
     auto background = style->array("background");
@@ -17,7 +19,7 @@ Style::Style(const char *path) {
         JEngine::Vector3f color = Util::read3f(font_obj->array("color"));
         color.normalize(255);
         
-        auto font_path = std::string("../test.dem/res/" + font_name + ".ttf");
+        auto font_path = std::string(_res + font_name + ".ttf");
         auto font_face = std::make_shared<JEngine::Font>(font_path.c_str(), font_size);
         Font* font = new Font(font_face, color);
         

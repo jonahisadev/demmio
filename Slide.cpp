@@ -34,10 +34,25 @@ Slide::Slide(Slides* parent, const JObject *slide)
             
             _text_nodes.push_back(node);
         }
+        
+        else if (type == "image") {
+            ImageNode node;
+            node.pos = Util::read2f(jnode->array("pos"));
+            node.size = Util::read2f(jnode->array("size"));
+            std::string path = parent->_res + jnode->string("name")->value();
+            node.img = std::make_shared<JEngine::TexturedQuad>(node.pos.x(), node.pos.y(), 
+                    node.size.x(), node.size.y(), path.c_str());
+            
+            _img_nodes.push_back(node);
+        }
     }
 }
 
 void Slide::render(int width, int height) const {
+    for (const auto& image : _img_nodes) {
+        image.img->render();
+    }
+    
     for (const auto& text : _text_nodes) {
         if (text.relative == RelativeToCenter) {
             text.font->font_face->render(
@@ -52,13 +67,14 @@ void Slide::render(int width, int height) const {
     }
 }
 
-Slides::Slides(Style* style) {
-    JObject* slide_doc = JSONDocument::parseFromFile("../test.dem/slides.json");
+Slides::Slides(const std::string& path, Style* style) {
+    JObject* slide_doc = JSONDocument::parseFromFile(path + "/slides.json");
     const JArray* slide_arr = slide_doc->array("slides");
 
     _current = 0;
     _max = slide_arr->size() - 1;
     _style = style;
+    _res = path + "/res/";
     
     for (int i = 0; i < slide_arr->size(); i++) {
         JObject* slide = jarray_index(slide_arr, JObject, i);
