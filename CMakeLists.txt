@@ -4,7 +4,7 @@ project(demmio)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
-add_executable(demmio main.cpp Style.cpp Style.h Util.cpp Util.h Slide.cpp Slide.h)
+add_executable(demmio src/main.cpp src/Style.cpp src/Style.h src/Util.cpp src/Util.h src/Slide.cpp src/Slide.h src/Nodes/Node.cpp src/Nodes/Node.h src/Nodes/TextNode.cpp src/Nodes/TextNode.h src/Nodes/ImageNode.cpp src/Nodes/ImageNode.h)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     find_package(PkgConfig REQUIRED)

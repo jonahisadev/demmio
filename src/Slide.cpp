@@ -1,4 +1,6 @@
 #include "Slide.h"
+#include "Nodes/TextNode.h"
+#include "Nodes/ImageNode.h"
 
 Slide::Slide(Slides* parent, const JObject *slide) 
 : _parent(parent)
@@ -14,56 +16,42 @@ Slide::Slide(Slides* parent, const JObject *slide)
         
         // Text
         if (type == "text") {
-            TextNode node;
-            node.text = jnode->string("text")->value();
-            node.font = const_cast<Style::Font*>(_parent->_style->font(jnode->string("font")->value()));
-            node.pos = Util::read2f(jnode->array("pos"));
-            
+            TextNode* node = new TextNode(parent);
+            node->setText(jnode->string("text")->value());
+            node->setFont(jnode->string("font")->value());
+            node->setPosition(Util::read2f(jnode->array("pos")));
+
             // Relative text positioning
             if (jnode->string("relative") != nullptr) {
                 std::string relative = jnode->string("relative")->value();
                 if (relative == "center") {
-                    node.relative = RelativeToCenter;
+                    node->setRelative(Node::RelativeToCenter);
                 }
             }
             
-            float width = node.font->font_face->width(node.text);
-            float height = node.font->font_face->height(node.text);
-            node.pos.translate(0, height);
-            node.size = {width, height};
+            float width = node->font()->font_face->width(node->text());
+            float height = node->font()->font_face->height(node->text());
+            node->position().translate(0, height);
+            node->setSize({width, height});
             
-            _text_nodes.push_back(node);
+            _nodes.push_back(node);
         }
         
         else if (type == "image") {
-            ImageNode node;
-            node.pos = Util::read2f(jnode->array("pos"));
-            node.size = Util::read2f(jnode->array("size"));
+            ImageNode* node = new ImageNode(parent);
+            node->setPosition(Util::read2f(jnode->array("pos")));
+            node->setSize(Util::read2f(jnode->array("size")));
             std::string path = parent->_res + jnode->string("name")->value();
-            node.img = std::make_shared<JEngine::TexturedQuad>(node.pos.x(), node.pos.y(), 
-                    node.size.x(), node.size.y(), path.c_str());
+            node->setImage(path);
             
-            _img_nodes.push_back(node);
+            _nodes.push_back(node);
         }
     }
 }
 
 void Slide::render(int width, int height) const {
-    for (const auto& image : _img_nodes) {
-        image.img->render();
-    }
-    
-    for (const auto& text : _text_nodes) {
-        if (text.relative == RelativeToCenter) {
-            text.font->font_face->render(
-                (width / 2) - (text.size.x() / 2) + text.pos.x(),
-                (height / 2) - (text.size.y() / 2) + text.pos.y(),
-                text.text,
-                text.font->color
-            );
-        } else {
-            text.font->font_face->render(text.pos.x(), text.pos.y(), text.text, text.font->color);
-        }
+    for (const auto& node : _nodes) {
+        node->render(width, height);
     }
 }
 

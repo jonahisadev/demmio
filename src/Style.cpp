@@ -35,10 +35,10 @@ Style::~Style() {
     }
 }
 
-const JEngine::Vector3i &Style::background() {
+const JEngine::Vector3i &Style::background() const {
     return _background;
 }
 
-const Style::Font* Style::font(std::string name) {
+const Style::Font* Style::font(std::string name) const {
     return _fonts.at(name);
 }

@@ -8,33 +8,15 @@
 #include <JEngine/Graphics/TexturedQuad.h>
 
 #include "Style.h"
-
-enum RelativePosition {
-    RelativeToNone,
-    RelativeToCenter,
-};
+#include "Nodes/Node.h"
 
 class Slides;
+class Node;
 
 class Slide {
 public:
-    struct TextNode {
-        std::string text;
-        Style::Font* font;
-        JEngine::Vector2f pos;
-        JEngine::Vector2f size;
-        RelativePosition relative = RelativeToNone;
-    };
-    
-    struct ImageNode {
-        JEngine::TexturedQuadPtr img;
-        JEngine::Vector2f pos;
-        JEngine::Vector2f size;
-    };
-    
     Slides* _parent;
-    std::vector<TextNode> _text_nodes;
-    std::vector<ImageNode> _img_nodes;
+    std::vector<Node*> _nodes;
     
 private:
     Slide(Slides* parent, const JObject* slide);
@@ -58,6 +40,7 @@ public:
     
     void next();
     void back();
+    inline const Style* style() const { return _style; }
     
     const Slide& currentSlide() const { return *_slides.at(_current); }
 };

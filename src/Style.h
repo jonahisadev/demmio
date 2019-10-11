@@ -30,6 +30,6 @@ public:
     explicit Style(const std::string& path);
     ~Style();
     
-    const JEngine::Vector3i& background();
-    const Font* font(std::string name);
+    const JEngine::Vector3i& background() const;
+    const Font* font(std::string name) const;
 };
