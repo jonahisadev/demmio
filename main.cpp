@@ -16,8 +16,9 @@ int main() {
     
     // Window
     Display window(1280, 720, "Demmio", true);
-//    window.vsync(true);
+    window.vsync(true);
     window.fullscreen(true);
+//    window.showCursor(false);
     
     auto t1 = std::chrono::high_resolution_clock::now();
 
@@ -35,7 +36,7 @@ int main() {
     auto render = [&]() {
         window.clear(style.background());
         
-        slides.currentSlide().render();
+        slides.currentSlide().render(window.width(), window.height());
     };
     
     // Update
@@ -43,7 +44,6 @@ int main() {
         if (window.keyOnce(KeyRight)) {
             slides.next();
         }
-        
         if (window.keyOnce(KeyLeft)) {
             slides.back();
         }

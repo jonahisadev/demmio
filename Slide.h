@@ -7,6 +7,11 @@
 
 #include "Style.h"
 
+enum RelativePosition {
+    RelativeToNone,
+    RelativeToCenter,
+};
+
 class Slides;
 
 class Slide {
@@ -16,6 +21,7 @@ public:
         Style::Font* font;
         JEngine::Vector2f pos;
         JEngine::Vector2f size;
+        RelativePosition relative = RelativeToNone;
     };
     
     Slides* _parent;
@@ -26,7 +32,7 @@ private:
     friend class Slides;
     
 public:
-    void render() const;
+    void render(int width, int height) const;
 };
 
 class Slides {

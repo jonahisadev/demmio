@@ -19,6 +19,14 @@ Slide::Slide(Slides* parent, const JObject *slide)
             node.font = const_cast<Style::Font*>(_parent->_style->font(jnode->string("font")->value()));
             node.pos = Util::read2f(jnode->array("pos"));
             
+            // Relative text positioning
+            if (jnode->string("relative") != nullptr) {
+                std::string relative = jnode->string("relative")->value();
+                if (relative == "center") {
+                    node.relative = RelativeToCenter;
+                }
+            }
+            
             float width = node.font->font_face->width(node.text);
             float height = node.font->font_face->height(node.text);
             node.pos.translate(0, height);
@@ -29,9 +37,18 @@ Slide::Slide(Slides* parent, const JObject *slide)
     }
 }
 
-void Slide::render() const {
+void Slide::render(int width, int height) const {
     for (const auto& text : _text_nodes) {
-        text.font->font_face->render(text.pos.x(), text.pos.y(), text.text, text.font->color);
+        if (text.relative == RelativeToCenter) {
+            text.font->font_face->render(
+                (width / 2) - (text.size.x() / 2) + text.pos.x(),
+                (height / 2) - (text.size.y() / 2) + text.pos.y(),
+                text.text,
+                text.font->color
+            );
+        } else {
+            text.font->font_face->render(text.pos.x(), text.pos.y(), text.text, text.font->color);
+        }
     }
 }
 

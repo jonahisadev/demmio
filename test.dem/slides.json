@@ -3,19 +3,21 @@
         "nodes": [{
             "type": "text",
             "text": "Demmio",
-            "pos": [10, 10],
+            "pos": [0, -25],
+            "relative": "center",
             "font": "Roboto-Regular-48"
         }, {
             "type": "text",
-            "text": "A coder's replacement for PowerPoint!",
-            "pos": [10, 60],
+            "text": "A coder's replacement for PowerPoint",
+            "pos": [0, 25],
+            "relative": "center",
             "font": "Roboto-Regular-32"
         }]
     }, {
         "nodes": [{
             "type": "text",
-            "text": "Slide number 2!",
-            "pos": [50, 50],
+            "text": "Slide 2!",
+            "pos": [10, 10],
             "font": "Roboto-Regular-48"
         }]
     }]
