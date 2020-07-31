@@ -55,9 +55,9 @@ Slide::Slide(Slides* parent, const JObject *slide)
     }
 }
 
-void Slide::render(int width, int height) const {
+void Slide::render(JEngine::Matrix4f view, int width, int height) const {
     for (const auto& node : _nodes) {
-        node->render(width, height);
+        node->render(view, width, height);
     }
 }
 

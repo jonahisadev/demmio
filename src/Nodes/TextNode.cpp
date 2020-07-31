@@ -1,6 +1,6 @@
 #include "TextNode.h"
 
-void TextNode::render(int width, int height) {
+void TextNode::render(JEngine::Matrix4f view, int width, int height) {
     if (_relative == RelativeToCenter) {
         _font->font_face->render(
                 (width / 2) - (_size.x() / 2) + _pos.x(),

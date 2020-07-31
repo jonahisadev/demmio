@@ -1,6 +1,6 @@
 #include "Style.h"
 
-Style::Style(const std::string& path) {
+Style::Style(const std::string& path, JEngine::Display* display) {
     _res = path + "/res/";
     
     JObject* style = JSONDocument::parseFromFile(path + "/style.json");
@@ -20,7 +20,7 @@ Style::Style(const std::string& path) {
         color.normalize(255);
         
         auto font_path = std::string(_res + font_name + ".ttf");
-        auto font_face = std::make_shared<JEngine::Font>(font_path.c_str(), font_size);
+        auto font_face = std::make_shared<JEngine::Font>(font_path.c_str(), font_size, display);
         Font* font = new Font(font_face, color);
         
         _fonts.insert({font_name + "-" + std::to_string(font_size), font});

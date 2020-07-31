@@ -27,7 +27,7 @@ private:
     std::string _res;
     
 public:
-    explicit Style(const std::string& path);
+    explicit Style(const std::string& path, JEngine::Display* display);
     ~Style();
     
     const JEngine::Vector3i& background() const;

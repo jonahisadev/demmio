@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     auto path = std::string(argv[1]);
     
     // Slides and style
-    Style style(path);
+    Style style(path, &window);
     Slides slides(path, &style);
 
     auto t2 = std::chrono::high_resolution_clock::now();
@@ -39,10 +39,10 @@ int main(int argc, char** argv) {
     std::cout << "Loaded slides in " << time_span.count() << "ms" << std::endl;
     
     // Render
-    auto render = [&]() {
+    auto render = [&](Matrix4f view) {
         window.clear(style.background());
         
-        slides.currentSlide().render(window.width(), window.height());
+        slides.currentSlide().render(view, window.width(), window.height());
     };
     
     // Update

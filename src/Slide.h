@@ -23,7 +23,7 @@ private:
     friend class Slides;
     
 public:
-    void render(int width, int height) const;
+    void render(JEngine::Matrix4f view, int width, int height) const;
 };
 
 class Slides {

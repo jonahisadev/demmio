@@ -27,7 +27,7 @@ protected:
 public:
     explicit Node(Slides* parent, Type type) : _parent(parent), _type(type) {}
 
-    virtual void render(int width, int height) = 0;
+    virtual void render(JEngine::Matrix4f view, int width, int height) = 0;
 
     inline JEngine::Vector2f& position() { return _pos; }
     inline const JEngine::Vector2f& size() const { return _size; }
